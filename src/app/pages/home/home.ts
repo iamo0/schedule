@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { AfterViewInit, Component, computed, ElementRef, inject, signal, ViewChild } from '@angular/core';
 import ScheduleService, { SpecialistNumberOfDays, SpecialistRoleNamePipe } from '../../data/services/schedule-service';
 import daysInMonth from '../../data/helpers/days-in-month';
 import isWeekend from '../../data/helpers/is-weekend';
@@ -12,7 +12,9 @@ import isToday from '../../data/helpers/is-today';
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
-export class Home {
+export class Home implements AfterViewInit {
+  @ViewChild("todayCol") todayCol!: ElementRef;
+
   schedule = inject(ScheduleService);
 
   year = signal(new Date().getFullYear());
@@ -39,6 +41,13 @@ export class Home {
       const updatedIndex = copy.findIndex((s) => s.id === userID);
       copy[updatedIndex].dates[this.year()][this.month()][parseInt(date) - 1] = checkbox.checked;
       return copy;
+    });
+  }
+
+  ngAfterViewInit() {
+    this.todayCol.nativeElement.scrollIntoView({
+      behaviour: "smooth",
+      block: "start",
     });
   }
 }
