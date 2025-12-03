@@ -7,7 +7,7 @@
         <th class="px-5 py-1 border-x border-b sticky left-[0] bg-gray-100 dark:bg-gray-900">Специалист</th>
         @for (day of monthDates(); track day.date) {
         <th class="px-2 py-1 border-b border-r" [class]="{
-            'bg-red-200': day.isWeekend,
+            'bg-red-100': day.isWeekend,
             'dark:bg-red-900': day.isWeekend,
             'bg-yellow-500': day.isToday,
           }">{{day.date}}</th>
@@ -18,18 +18,19 @@
       @for (specialist of schedule.specialists(); track specialist.id) {
       <tr>
         <td
-          class="sticky left-[0] bg-gray-100 dark:bg-gray-900 text-nowrap px-2 py-2 pr-4 align-middle border-x border-b">
-          <div class="font-700">{{specialist.name}}</div>
+          class="sticky left-[0] bg-gray-100 dark:bg-gray-800 text-nowrap px-2 py-2 pr-4 align-middle border-x border-b z-10">
+          <div class="font-500">{{specialist.name}}</div>
           <div class="text-xs">
-            <strong>{{specialist.role | rolename}}</strong>,
+            <strong class="font-700">{{specialist.role | rolename}}</strong>,
             смен:&nbsp;<strong>{{specialist.dates[year().toString()][month().toString()] | numberofdays }}</strong>
           </div>
         </td>
         @for (specialistIsAvailable of specialist.dates[year().toString()][month().toString()]; track $index) {
-        <td class="text-center px-4 py-2 align-middle border-r border-b" [class]="{
-              'bg-red-200': monthDates()[$index].isWeekend,
+        <td class="text-center px-4 py-2 align-middle border-r bg-gray-100 dark:bg-gray-800" [class]="{
+              'bg-red-100': monthDates()[$index].isWeekend,
               'dark:bg-red-900': monthDates()[$index].isWeekend,
               'bg-yellow-500': monthDates()[$index].isToday,
+              'dark:bg-yellow-500': monthDates()[$index].isToday,
             }">
           <input type="checkbox" [checked]="specialistIsAvailable" (change)="onDateChange($event)"
             [name]="specialist.id" [value]="$index + 1" class="size-7.5" />
