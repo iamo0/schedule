@@ -1,0 +1,8 @@
+.specialists-table {
+  border-collapse: separate;
+}
+
+.specialists-table td,
+.specialists-table th {
+  border-width: 0.5px;
+}
