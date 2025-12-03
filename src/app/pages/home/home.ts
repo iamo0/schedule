@@ -2,13 +2,12 @@ import { AfterViewInit, Component, computed, ElementRef, inject, signal, ViewChi
 import ScheduleService, { SpecialistNumberOfDays, SpecialistRoleNamePipe } from '../../data/services/schedule-service';
 import daysInMonth from '../../data/helpers/days-in-month';
 import isWeekend from '../../data/helpers/is-weekend';
-import { DatePipe } from '@angular/common';
 import Specialist from '../../data/types/specialist.interface';
 import isToday from '../../data/helpers/is-today';
 
 @Component({
   selector: 'app-home',
-  imports: [SpecialistRoleNamePipe, SpecialistNumberOfDays, DatePipe],
+  imports: [SpecialistRoleNamePipe, SpecialistNumberOfDays],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
