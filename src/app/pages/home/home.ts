@@ -2,8 +2,8 @@ import { AfterViewInit, Component, computed, ElementRef, inject, signal, ViewChi
 import ScheduleService, { SpecialistNumberOfDays, SpecialistRoleNamePipe } from '../../data/services/schedule-service';
 import daysInMonth from '../../data/helpers/days-in-month';
 import isWeekend from '../../data/helpers/is-weekend';
-import Specialist from '../../data/types/specialist.interface';
 import isToday from '../../data/helpers/is-today';
+import { Role } from '../../data/types/specialist.interface';
 
 @Component({
   selector: 'app-home',
@@ -13,6 +13,14 @@ import isToday from '../../data/helpers/is-today';
 })
 export class Home implements AfterViewInit {
   @ViewChild("todayCol") todayCol!: ElementRef;
+
+  SpecialistColor = new Map([
+    [Role.MANAGER, "rgba(153, 46, 46, 0.2)",],
+    [Role.MARSHALL, "rgba(228, 215, 31, 0.3)",],
+    [Role.SENIOR_MARSHALL, "rgba(27, 155, 97, 0.2)",],
+    [Role.MECHANIC, "rgba(228, 97, 31, 0.3)",],
+    [Role.JANITOR, "rgba(228, 97, 31, 0.1)",],
+  ])
 
   schedule = inject(ScheduleService);
 
