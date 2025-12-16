@@ -30,20 +30,11 @@ export class Home implements AfterViewInit {
       isToday: isToday(new Date(this.year(), this.month() - 1, i + 1)),
     })));
 
-  onDateChange(event: Event) {
-    const checkbox = event.target as HTMLInputElement;
-    const userID = checkbox.name;
-    const date = checkbox.value;
-
-    this.schedule.specialists.update((specialists: Specialist[]) => {
-      const copy = JSON.parse(JSON.stringify(specialists)) as Specialist[];
-      const updatedIndex = copy.findIndex((s) => s.id === userID);
-      copy[updatedIndex].dates[this.year()][this.month()][parseInt(date) - 1] = checkbox.checked;
-      return copy;
-    });
-  }
-
   ngAfterViewInit() {
+    if (!this.todayCol) {
+      return;
+    }
+
     this.todayCol.nativeElement.scrollIntoView({
       behaviour: "smooth",
       block: "start",

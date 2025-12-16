@@ -1,6 +1,6 @@
-import { Injectable, Pipe, PipeTransform, signal } from '@angular/core';
+import { inject, Injectable, Pipe, PipeTransform, signal } from '@angular/core';
 import Specialist, { Role } from '../types/specialist.interface';
-import getRandom from '../helpers/get-random';
+import { Loader } from './loader';
 
 @Pipe({ name: "rolename" })
 export class SpecialistRoleNamePipe implements PipeTransform {
@@ -8,6 +8,8 @@ export class SpecialistRoleNamePipe implements PipeTransform {
     [Role.MANAGER, "Менеджер",],
     [Role.MARSHALL, "Маршал",],
     [Role.SENIOR_MARSHALL, "Старший маршал",],
+    [Role.MECHANIC, "Механик",],
+    [Role.JANITOR, "Уборщица",],
   ]);
 
   transform(role: Role) {
@@ -24,24 +26,16 @@ export class SpecialistNumberOfDays implements PipeTransform {
 
 @Injectable({ providedIn: 'root' })
 export default class ScheduleService {
-  static names = ["Максим Семашко", "Игорь Алексеенко", "Ростислав Максимов", "Максим Меркурьев", "Щекотов Илья", "Каменьков Глеб"];
+  #loader = inject(Loader);
 
   specialists = signal<Specialist[]>([]);
 
+  isLoading = signal(true);
+
   constructor() {
-    for (let i = 0; i < ScheduleService.names.length; i++) {
-      this.specialists.update((val) => [...val, {
-        id: i.toString(),
-        role: getRandom(1, 3) as Role,
-        name: ScheduleService.names[i],
-        dates: {
-          [new Date().getFullYear().toString()]: {
-            [(new Date().getMonth() + 1).toString()]: new Array(31)
-              .fill(undefined)
-              .map(() => Math.random() > 0.5)
-          },
-        },
-      }]);
-    }
+    this.#loader.get("api/schedule.json").subscribe((data) => {
+      this.specialists.set(data as Specialist[]);
+      this.isLoading.set(false);
+    });
   }
 }
