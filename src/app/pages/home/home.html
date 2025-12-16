@@ -18,7 +18,10 @@
             <th class="px-5 py-1 border-x border-b sticky left-[0] bg-gray-100 dark:bg-gray-900">Специалист</th>
             @for (day of monthDates(); track day.date) {
               @if (day.isToday) {
-                <th class="px-2 py-1 border-b border-r bg-yellow-500" #todayCol>{{day.date}}</th>
+                <th class="px-2 py-1 border-b border-r bg-yellow-500" #todayCol>
+                  <span class="text-red-500">●</span>
+                  {{day.date}}
+                </th>
               } @else {
                 <th class="px-2 py-1 border-b border-r" [class]="{
                   'bg-red-100': day.isWeekend,
@@ -44,7 +47,7 @@
             @for (specialistIsAvailable of specialist.dates[year().toString()][month().toString()]; track $index) {
             <td
               class="text-center px-4 py-2 align-middle border-r bg-gray-100 dark:bg-gray-800"
-              [style.backgroundColor]="monthDates()[$index].isWeekend ? '' : SpecialistColor.get(specialist.role)"
+              [style.backgroundColor]="monthDates()[$index].isWeekend || monthDates()[$index].isToday ? '' : SpecialistColor.get(specialist.role)"
               [class]="{
                 'bg-red-100': monthDates()[$index].isWeekend,
                 'dark:bg-red-900': monthDates()[$index].isWeekend,
