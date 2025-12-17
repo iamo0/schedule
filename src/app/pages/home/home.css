@@ -6,7 +6,3 @@
 .specialists-table th {
   border-width: 0.5px;
 }
-
-.specialists-table tr:hover td {
-  filter: brightness(120%);
-}

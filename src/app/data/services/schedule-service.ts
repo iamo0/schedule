@@ -1,6 +1,7 @@
-import { inject, Injectable, Pipe, PipeTransform, signal } from '@angular/core';
+import { Injectable, Pipe, PipeTransform, signal } from '@angular/core';
 import Specialist, { Role } from '../types/specialist.interface';
-import { Loader } from './loader';
+import Data from './loader';
+import { Observable } from 'rxjs';
 
 @Pipe({ name: "rolename" })
 export class SpecialistRoleNamePipe implements PipeTransform {
@@ -26,16 +27,13 @@ export class SpecialistNumberOfDays implements PipeTransform {
 
 @Injectable({ providedIn: 'root' })
 export default class ScheduleService {
-  #loader = inject(Loader);
+  specialists$!:Observable<readonly Specialist[]>;
 
-  specialists = signal<Specialist[]>([]);
-
-  isLoading = signal(true);
-
-  constructor() {
-    this.#loader.get("api/schedule.json").subscribe((data) => {
-      this.specialists.set(data as Specialist[]);
-      this.isLoading.set(false);
+  load() {
+    this.specialists$ = new Observable((subscriber) => {
+      subscriber.next(Data);
+      subscriber.complete();
     });
+    return this.specialists$;
   }
 }

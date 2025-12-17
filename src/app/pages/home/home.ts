@@ -1,17 +1,18 @@
-import { AfterViewInit, Component, computed, ElementRef, inject, signal, ViewChild } from '@angular/core';
+import { Component, computed, ElementRef, inject, OnInit, signal, ViewChild } from '@angular/core';
 import ScheduleService, { SpecialistNumberOfDays, SpecialistRoleNamePipe } from '../../data/services/schedule-service';
 import daysInMonth from '../../data/helpers/days-in-month';
 import isWeekend from '../../data/helpers/is-weekend';
 import isToday from '../../data/helpers/is-today';
 import { Role } from '../../data/types/specialist.interface';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-home',
-  imports: [SpecialistRoleNamePipe, SpecialistNumberOfDays],
+  imports: [SpecialistRoleNamePipe, SpecialistNumberOfDays, AsyncPipe],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
-export class Home implements AfterViewInit {
+export class Home implements OnInit {
   @ViewChild("todayCol") todayCol!: ElementRef;
 
   SpecialistColor = new Map([
@@ -38,14 +39,16 @@ export class Home implements AfterViewInit {
       isToday: isToday(new Date(this.year(), this.month() - 1, i + 1)),
     })));
 
-  ngAfterViewInit() {
-    if (!this.todayCol) {
-      return;
-    }
-
-    this.todayCol.nativeElement.scrollIntoView({
-      behaviour: "smooth",
-      block: "start",
+  ngOnInit() {
+    this.schedule.load().subscribe(() => {
+      setTimeout(() => {
+        try {
+          (this.todayCol.nativeElement as HTMLElement)?.scrollIntoView({
+            behavior: "smooth",
+            block: "nearest",
+          });
+        } catch(err) {}
+      }, 0);
     });
   }
 }
