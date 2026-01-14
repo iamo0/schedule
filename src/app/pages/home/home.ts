@@ -1,5 +1,5 @@
 import { Component, computed, ElementRef, inject, OnInit, signal, ViewChild } from '@angular/core';
-import ScheduleService, { SpecialistNumberOfDays, SpecialistRoleNamePipe } from '../../data/services/schedule-service';
+import ScheduleService, { IsNotEmptyPipe, SpecialistNumberOfDays, SpecialistRoleNamePipe } from '../../data/services/schedule-service';
 import daysInMonth from '../../data/helpers/days-in-month';
 import isWeekend from '../../data/helpers/is-weekend';
 import isToday from '../../data/helpers/is-today';
@@ -8,7 +8,7 @@ import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-home',
-  imports: [SpecialistRoleNamePipe, SpecialistNumberOfDays, AsyncPipe],
+  imports: [SpecialistRoleNamePipe, SpecialistNumberOfDays, IsNotEmptyPipe, AsyncPipe],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
@@ -16,8 +16,8 @@ export class Home implements OnInit {
   @ViewChild("todayCol") todayCol!: ElementRef;
 
   SpecialistColor = new Map([
-    [Role.MANAGER, "rgba(153, 46, 46, 0.2)",],
-    [Role.JUNIOR_MANAGER, "rgba(153, 46, 46, 0.1)",],
+    [Role.MANAGER, "rgba(153, 46, 46, 0.3)",],
+    [Role.JUNIOR_MANAGER, "rgba(153, 46, 46, 0.2)",],
     [Role.MARSHALL, "rgba(228, 215, 31, 0.3)",],
     [Role.SENIOR_MARSHALL, "rgba(27, 155, 97, 0.2)",],
     [Role.MECHANIC, "rgba(228, 97, 31, 0.3)",],
@@ -51,5 +51,27 @@ export class Home implements OnInit {
         } catch(err) {}
       }, 0);
     });
+  }
+
+  onNextMonthClick() {
+    const newMonth = this.month() + 1;
+
+    if (newMonth > 12) {
+      this.year.set(this.year() + 1);
+      this.month.set(1);
+    } else {
+      this.month.set(newMonth);
+    }
+  }
+
+  onPreviousMonthClick() {
+    const newMonth = this.month() - 1;
+
+    if (newMonth < 1) {
+      this.year.set(this.year() - 1);
+      this.month.set(12);
+    } else {
+      this.month.set(newMonth);
+    }
   }
 }

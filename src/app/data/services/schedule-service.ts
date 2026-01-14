@@ -1,13 +1,23 @@
 import { Injectable, Pipe, PipeTransform, signal } from '@angular/core';
 import Specialist, { Role } from '../types/specialist.interface';
 import Data from './loader';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
+
+@Pipe({ name: "isNotEmpty" })
+export class IsNotEmptyPipe implements PipeTransform {
+  transform(value: readonly Specialist[], year: string, month: string): boolean {
+    return value.some((specialist) => (
+      specialist.dates[year] !== undefined &&
+      specialist.dates[year]![month] !== undefined
+    ));
+  };
+}
 
 @Pipe({ name: "rolename" })
 export class SpecialistRoleNamePipe implements PipeTransform {
   #roleNames = new Map<Role, string>([
     [Role.MANAGER, "Администратор"],
-    [Role.JUNIOR_MANAGER, "Помощник администратора"],
+    [Role.JUNIOR_MANAGER, "Пом. администратора"],
     [Role.MARSHALL, "Маршал"],
     [Role.SENIOR_MARSHALL, "Старший смены"],
     [Role.MECHANIC, "Механик"],
@@ -36,5 +46,17 @@ export default class ScheduleService {
       subscriber.complete();
     });
     return this.specialists$;
+  }
+
+  getMinMonth() {
+    return this.specialists$.pipe(map((specialists) => {
+      return Math.min(...specialists.map((specialist) => {
+        return Math.min(...Object.keys(specialist.dates).map((year) => {
+          return Math.min(...Object.keys(specialist.dates[year]!).map((month) => {
+            return parseInt(month);
+          }));
+        }).filter((month) => month !== undefined));
+      }).filter((month) => month !== undefined));
+    }));
   }
 }
