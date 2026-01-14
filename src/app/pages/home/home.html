@@ -30,39 +30,41 @@
       <tbody>
         @if (schedule.specialists$ | async; as data) {
           @for (specialist of data; track specialist.id) {
-            <tr>
-              <td
-                class="sticky left-[0] backdrop-blur-xl text-nowrap px-2 py-2 pr-4 align-middle border-x border-b z-10"
-                [style.backgroundColor]="SpecialistColor.get(specialist.role)"
-              >
-                <div class="font-500">{{specialist.name}}</div>
-                <div class="text-xs">
-                  <strong class="font-700">{{specialist.role | rolename}}</strong>,
-                  смен:&nbsp;<strong>{{specialist.dates[year().toString()][month().toString()] | numberofdays }}</strong>
-                </div>
-              </td>
-              @for (specialistIsAvailable of specialist.dates[year().toString()][month().toString()]; track $index) {
-              <td
-                class="text-center px-4 py-2 align-middle border-r"
-                [style.backgroundColor]="monthDates()[$index].isWeekend || monthDates()[$index].isToday ? '' : SpecialistColor.get(specialist.role)"
-                [class]="{
-                  'bg-gray-400': monthDates()[$index].isWeekend,
-                  'dark:bg-gray-500': monthDates()[$index].isWeekend,
-                  'bg-red-500': monthDates()[$index].isToday,
-                  'dark:bg-red-500': monthDates()[$index].isToday,
-                }"
-              >
-                <input
-                  type="checkbox"
-                  [checked]="specialistIsAvailable"
-                  readonly
-                  [name]="specialist.id"
-                  [value]="$index + 1" class="size-7.5"
-                  onclick="return false"
-                />
-              </td>
-              }
-            </tr>
+            @if (specialist.dates[year().toString()] !== undefined && specialist.dates[year().toString()]![month().toString()] !== undefined) {
+              <tr>
+                <td
+                  class="sticky left-[0] backdrop-blur-xl text-nowrap px-2 py-2 pr-4 align-middle border-x border-b z-10"
+                  [style.backgroundColor]="SpecialistColor.get(specialist.role)"
+                >
+                  <div class="font-500">{{specialist.name}}</div>
+                  <div class="text-xs">
+                    <strong class="font-700">{{specialist.role | rolename}}</strong>,
+                    смен:&nbsp;<strong>{{specialist.dates[year().toString()]![month().toString()]! | numberofdays }}</strong>
+                  </div>
+                </td>
+                @for (specialistIsAvailable of specialist.dates[year().toString()]![month().toString()]!; track $index) {
+                <td
+                  class="text-center px-4 py-2 align-middle border-r"
+                  [style.backgroundColor]="monthDates()[$index].isWeekend || monthDates()[$index].isToday ? '' : SpecialistColor.get(specialist.role)"
+                  [class]="{
+                    'bg-gray-400': monthDates()[$index].isWeekend,
+                    'dark:bg-gray-500': monthDates()[$index].isWeekend,
+                    'bg-red-500': monthDates()[$index].isToday,
+                    'dark:bg-red-500': monthDates()[$index].isToday,
+                  }"
+                >
+                  <input
+                    type="checkbox"
+                    [checked]="specialistIsAvailable"
+                    readonly
+                    [name]="specialist.id"
+                    [value]="$index + 1" class="size-7.5"
+                    onclick="return false"
+                  />
+                </td>
+                }
+              </tr>
+            }
           }
         } @else {
           <tr>

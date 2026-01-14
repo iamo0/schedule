@@ -1,5 +1,6 @@
 export enum Role {
   MANAGER = 1,
+  JUNIOR_MANAGER = 1.5,
   MARSHALL = 2,
   SENIOR_MARSHALL = 3,
   MECHANIC = 4,
@@ -12,7 +13,7 @@ export default interface Specialist {
   name: string,
   dates: {
     [year: string]: {
-      [month: string]: boolean[],
-    },
+      [month: string]: boolean[] | undefined,
+    } | undefined,
   },
 }

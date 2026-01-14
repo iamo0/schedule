@@ -8,6 +8,9 @@ const Data: readonly Specialist[] = Object.freeze([
     "dates": {
       "2025": {
         "12": [true, true, false, false, true, true, false, false, true, true, false, false, true, true, false, true, false, true, false, false, true, true, false, false, true, true, false, false, true, true, false]
+      },
+      "2026": {
+        "1": [false, true, true, true, false, true, true, false, false, true, true, true, false, false, false, false, true, true, true, false, false, true, true, false, false, true, true, false, false, true, false],
       }
     }
   },
@@ -18,6 +21,19 @@ const Data: readonly Specialist[] = Object.freeze([
     "dates": {
       "2025": {
         "12": [false, false, true, true, false, false, true, true, false, false, true, true, false, false, true, false, true, false, true, true, false, false, true, true, false, false, true, true, false, false, true]
+      },
+      "2026": {
+        "1": [true, false, false, true, true, false, false, true, true, false, false, false, true, true, true, true, false, false, false, true, true, false, false, true, true, false, false, true, true, false, true],
+      }
+    }
+  },
+  {
+    "id": "025",
+    "role": 1.5,
+    "name": "Гольбрайх Андрей",
+    "dates": {
+      "2026": {
+        "1": [true, false, false, false, true, true, true, true, true, true, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
       }
     }
   },
@@ -28,7 +44,20 @@ const Data: readonly Specialist[] = Object.freeze([
     "dates": {
       "2025": {
         "12": [false, true, true, false, false, false, false, true, false, false, false, false, false, true, true, false, true, false, false, false, true, false, true, true, false, false, false, true, true, true, false]
+      },
+      "2026": {
+        "1": [false, true, true, false, false, true, false, true, false, false, false, true, true, true, false, true, true, false, false, false, true, false, false, true, true, false, false, false, true, true, true],
       }
+    }
+  },
+  {
+    "id": "035",
+    "role": 3,
+    "name": "Максимов Ростислав",
+    "dates": {
+      "2026": {
+        "1": [false, false, false, true, true, false, true, false, true, true, true, true, false, false, true, false, false, true, true, true, false, true, true, false, false, true, true, true, false, false, false]
+      },
     }
   },
   {
@@ -48,6 +77,9 @@ const Data: readonly Specialist[] = Object.freeze([
     "dates": {
       "2025": {
         "12": [false, true, true, false, false, true, true, false, true, true, false, true, true, true, false, true, false, false, true, true, false, false, true, false, true, true, true, false, false, true, true]
+      },
+      "2026": {
+        "1": [false, false, false, true, true, false, false, true, true, false, false, false, true, true, false, true, true, false, false, true, true, false, false, true, true, false, false, true, false, false, true],
       }
     }
   },
@@ -58,7 +90,27 @@ const Data: readonly Specialist[] = Object.freeze([
     "dates": {
       "2025": {
         "12": [false, true, false, true, true, true, false, true, false, false, true, true, false, false, true, false, true, true, false, true, true, true, false, false, true, true, true, true, false, false, false]
-      }
+      },
+    }
+  },
+  {
+    "id": "065",
+    "role": 2,
+    "name": "Исаев Илья",
+    "dates": {
+      "2026": {
+        "1": [false, true, true, false, false, true, true, false, false, true, true, true, false, false, true, false, true, false, true, true, false, false, false, true, true, false, false, false, true, true, false]
+      },
+    }
+  },
+  {
+    "id": "0675",
+    "role": 2,
+    "name": "Заикин Владислав",
+    "dates": {
+      "2026": {
+        "1": [true, true, true, false, false, true, true, false, false, true, true, false, true, true, false, false, false, true, true, false, false, true, true, false, false, true, true, false, false, false, true]
+      },
     }
   },
   {
@@ -68,6 +120,9 @@ const Data: readonly Specialist[] = Object.freeze([
     "dates": {
       "2025": {
         "12": [false, false, false, false, false, true, true, false, false, false, false, false, true, true, false, false, false, false, false, true, true, false, false, false, false, false, true, true, true, false, true]
+      },
+      "2026": {
+        "1": [false, false, false, true, true, false, false, true, true, true, true, true, false, false, false, false, true, true, false, false, false, false, false, true, true, false, false, false, false, false, true],
       }
     }
   },
@@ -78,6 +133,9 @@ const Data: readonly Specialist[] = Object.freeze([
     "dates": {
       "2025": {
         "12": [false, true, true, true, true, true, false, false, true, true, true, true, true, false, false, true, true, true, true, true, false, false, true, true, true, true, true, false, false, true, true]
+      },
+      "2026": {
+        "1": [true, false, false, true, false, true, false, true, false, false, false, true, true, true, true, true, true, true, true, true, true, true, true, true, false, false, true, true, true, true, true],
       }
     }
   }

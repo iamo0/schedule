@@ -6,11 +6,12 @@ import { Observable } from 'rxjs';
 @Pipe({ name: "rolename" })
 export class SpecialistRoleNamePipe implements PipeTransform {
   #roleNames = new Map<Role, string>([
-    [Role.MANAGER, "Менеджер",],
-    [Role.MARSHALL, "Маршал",],
-    [Role.SENIOR_MARSHALL, "Старший маршал",],
-    [Role.MECHANIC, "Механик",],
-    [Role.JANITOR, "Уборщица",],
+    [Role.MANAGER, "Администратор"],
+    [Role.JUNIOR_MANAGER, "Помощник администратора"],
+    [Role.MARSHALL, "Маршал"],
+    [Role.SENIOR_MARSHALL, "Старший смены"],
+    [Role.MECHANIC, "Механик"],
+    [Role.JANITOR, "Уборщица"],
   ]);
 
   transform(role: Role) {

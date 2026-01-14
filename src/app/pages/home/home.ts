@@ -17,6 +17,7 @@ export class Home implements OnInit {
 
   SpecialistColor = new Map([
     [Role.MANAGER, "rgba(153, 46, 46, 0.2)",],
+    [Role.JUNIOR_MANAGER, "rgba(153, 46, 46, 0.1)",],
     [Role.MARSHALL, "rgba(228, 215, 31, 0.3)",],
     [Role.SENIOR_MARSHALL, "rgba(27, 155, 97, 0.2)",],
     [Role.MECHANIC, "rgba(228, 97, 31, 0.3)",],
