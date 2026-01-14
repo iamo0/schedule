@@ -1,4 +1,4 @@
-import { Component, computed, ElementRef, inject, OnInit, signal, ViewChild } from '@angular/core';
+import { Component, computed, effect, ElementRef, inject, OnChanges, OnInit, signal, SimpleChanges, ViewChild } from '@angular/core';
 import ScheduleService, { IsNotEmptyPipe, SpecialistNumberOfDays, SpecialistRoleNamePipe } from '../../data/services/schedule-service';
 import daysInMonth from '../../data/helpers/days-in-month';
 import isWeekend from '../../data/helpers/is-weekend';
@@ -40,16 +40,20 @@ export class Home implements OnInit {
       isToday: isToday(new Date(this.year(), this.month() - 1, i + 1)),
     })));
 
+  _focusToday() {
+    setTimeout(() => {
+      try {
+        (this.todayCol.nativeElement as HTMLElement)?.scrollIntoView({
+          behavior: "smooth",
+          block: "nearest",
+        });
+      } catch(err) {}
+    }, 0);
+  }
+
   ngOnInit() {
     this.schedule.load().subscribe(() => {
-      setTimeout(() => {
-        try {
-          (this.todayCol.nativeElement as HTMLElement)?.scrollIntoView({
-            behavior: "smooth",
-            block: "nearest",
-          });
-        } catch(err) {}
-      }, 0);
+      this._focusToday();
     });
   }
 
@@ -62,6 +66,8 @@ export class Home implements OnInit {
     } else {
       this.month.set(newMonth);
     }
+
+    this._focusToday();
   }
 
   onPreviousMonthClick() {
@@ -73,5 +79,13 @@ export class Home implements OnInit {
     } else {
       this.month.set(newMonth);
     }
+
+    this._focusToday();
+  }
+
+  onTodayClick() {
+    this.year.set(new Date().getFullYear());
+    this.month.set(new Date().getMonth() + 1);
+    this._focusToday();
   }
 }

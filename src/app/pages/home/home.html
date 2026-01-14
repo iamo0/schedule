@@ -12,28 +12,28 @@
     }) }}</h2>
   </div>
 
-  <div class="max-w-full overflow-x-auto">
-    <table class="border-y font-500 specialists-table mx-auto" cellpadding="0" cellspacing="0">
-      <thead>
-        <tr>
-          <th class="px-5 py-1 border-x border-b sticky left-[0] backdrop-blur-xl">Специалист</th>
-            @for (day of monthDates(); track day.date) {
-              @if (day.isToday) {
-                <th class="px-2 py-1 border-b border-r bg-red-500" #todayCol>
-                  <span class="text-white">●&nbsp;{{day.date}}</span>
-                </th>
-              } @else {
-                <th class="px-2 py-1 border-b border-r" [class]="{
-                  'bg-gray-400': day.isWeekend,
-                  'dark:bg-gray-500': day.isWeekend,
-                }">{{day.date}}</th>
-              }
-            }
-        </tr>
-      </thead>
-      <tbody>
-        @if (schedule.specialists$ | async; as data) {
-          @if (data | isNotEmpty : year().toString() : month().toString()) {
+  <div class="max-w-full overflow-x-auto mb-15">
+    @if (schedule.specialists$ | async; as data) {
+      @if (data | isNotEmpty : year().toString() : month().toString()) {
+        <table class="border-y font-500 specialists-table mx-auto" cellpadding="0" cellspacing="0">
+          <thead>
+            <tr>
+              <th class="px-5 py-1 border-x border-b sticky left-[0] backdrop-blur-xl">Специалист</th>
+                @for (day of monthDates(); track day.date) {
+                  @if (day.isToday) {
+                    <th class="px-2 py-1 border-b border-r bg-red-500" #todayCol>
+                      <span class="text-white">●&nbsp;{{day.date}}</span>
+                    </th>
+                  } @else {
+                    <th class="px-2 py-1 border-b border-r" [class]="{
+                      'bg-gray-400': day.isWeekend,
+                      'dark:bg-gray-500': day.isWeekend,
+                    }">{{day.date}}</th>
+                  }
+                }
+            </tr>
+          </thead>
+          <tbody>
             @for (specialist of data; track specialist.id) {
               @if (specialist.dates[year().toString()] !== undefined && specialist.dates[year().toString()]![month().toString()] !== undefined) {
                 <tr>
@@ -71,17 +71,20 @@
                 </tr>
               }
             }
-          } @else {
-            <tr>
-              <td [attr.colspan]="monthDates().length + 1" class="text-center text-gray-500 py-5">Нет данных</td>
-            </tr>
-          }
-        } @else {
-          <tr>
-            <td [attr.colspan]="monthDates().length + 1" class="text-center text-gray-500 py-5">Загрузка&hellip;</td>
-          </tr>
-        }
-      </tbody>
-    </table>
+          </tbody>
+        </table>
+      } @else {
+        <div class="text-center text-gray-500 py-5">Нет данных</div>
+      }
+    } @else {
+      <div class="text-center text-gray-500 py-5">Загрузка&hellip;</div>
+    }
+</div>
+
+  <div class="fixed bottom-0 left-0 right-0 px-3 py-3.5 z-10">
+    <button
+      (click)="onTodayClick()"
+      class="border rounded-3xl text-center font-700 bg-gray-100 dark:bg-gray-900 px-5 py-2"
+    >Сегодня</button>
   </div>
 </main>
