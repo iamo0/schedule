@@ -21,7 +21,7 @@
               <th class="px-5 py-1 border-x border-b sticky left-[0] backdrop-blur-xl">Специалист</th>
                 @for (day of monthDates(); track day.date) {
                   @if (day.isToday) {
-                    <th class="px-2 py-1 border-b border-r bg-red-500" #todayCol>
+                    <th class="px-2 py-1 border-b border-r bg-red-500" #todayCol style="scroll-margin-left: 50vw;">
                       <span class="text-white">●&nbsp;{{day.date}}</span>
                     </th>
                   } @else {
